@@ -23,41 +23,59 @@ sealed class List<out A> {
     }
 }
 
-fun <A> List<A>.tail(): List<A> =
-    when (this) {
-        is Nil -> throw Exception("List was Nil")
-        is Cons -> tail
-    }
+object Nil : List<Nothing>()
 
-fun <A> List<A>.setHead(x: A): List<A> =
-    when (this) {
-        is Nil -> throw Exception("List was Nil")
-        is Cons -> Cons(x, tail)
-    }
+data class Cons<out A>(val head: A, val tail: List<A>) : List<A>()
+
+fun <A> List<A>.tail(): List<A> {
+    require(this is Cons) { "Can't get tail of Nil" }
+    return tail
+}
+
+fun <A> List<A>.setHead(x: A): List<A> {
+    require(this is Cons) { "Can't setHead of Nil" }
+    return Cons(x, tail)
+}
 
 fun <A> List<A>.drop(n: Int): List<A> =
     if (n == 0) this
     else {
         when (this) {
-            is Nil -> throw Exception("Ran out of elements")
+            is Nil -> Nil
             is Cons -> tail.drop(n - 1)
         }
     }
 
 fun <A> List<A>.dropWhile(f: (A) -> Boolean): List<A> =
     when (this) {
-        is Nil -> throw Exception("Ran out of elements")
+        is Nil -> Nil
         is Cons ->
             if (f(head)) tail.dropWhile(f)
             else this
     }
 
-object Nil : List<Nothing>()
+fun <A> List<A>.append(xs: List<A>): List<A> =
+    when (this) {
+        is Nil -> xs
+        is Cons -> Cons(head, tail.append(xs))
+    }
 
-data class Cons<out A>(val head: A, val tail: List<A>) : List<A>()
+fun <A> List<A>.init(): List<A> {
+    require(this is Cons) { "Can't get init of Nil" }
+    return when (tail) {
+        is Nil -> Nil
+        is Cons -> Cons(head, tail.init())
+    }
+}
 
 fun main() {
     val a = Cons(0, Cons(1, Cons(2, Cons(3, Nil))))
-    val isEven = { n: Int -> n % 2 == 0 }
-    println(a.dropWhile(isEven))
+    val b = Cons(4, Cons(5, Cons(6, Cons(7, Nil))))
+
+    println(b.tail())
+
+    println(a.setHead(10))
+
+    val lessThan10 = { n: Int -> n < 10 }
+    println(a.dropWhile(lessThan10))
 }
