@@ -7,18 +7,14 @@ sealed class List<out A> {
             return if (aa.isEmpty()) Nil else Cons(aa[0], of(*tail))
         }
 
-        fun sum(ints: List<Int>): Int =
-            when (ints) {
-                is Nil -> 0
-                is Cons -> ints.head + sum(ints.tail)
-            }
+        fun sum(ints: List<Int>): Int = foldRight(ints, 0, { a, b -> a + b })
 
-        fun product(doubles: List<Double>): Double =
-            when (doubles) {
-                is Nil -> 1.0
-                is Cons ->
-                    if (doubles.head == 0.0) 0.0
-                    else doubles.head * product(doubles.tail)
+        fun product(dbs: List<Double>): Double = foldRight(dbs, 1.0, { a, b -> a * b })
+
+        fun <A, B> foldRight(xs: List<A>, acc: B, f: (A, B) -> B): B =
+            when (xs) {
+                is Nil -> acc
+                is Cons -> f(xs.head, foldRight(xs.tail, acc, f))
             }
     }
 }
@@ -69,13 +65,9 @@ fun <A> List<A>.init(): List<A> {
 }
 
 fun main() {
-    val a = Cons(0, Cons(1, Cons(2, Cons(3, Nil))))
-    val b = Cons(4, Cons(5, Cons(6, Cons(7, Nil))))
+    val a = Cons(1, Cons(2, Cons(3, Cons(4, Nil))))
+    val b = Cons(1.0, Cons(2.0, Cons(3.0, Cons(4.0, Nil))))
 
-    println(b.tail())
-
-    println(a.setHead(10))
-
-    val lessThan10 = { n: Int -> n < 10 }
-    println(a.dropWhile(lessThan10))
+    println(List.sum(a))
+    println(List.product(b))
 }
