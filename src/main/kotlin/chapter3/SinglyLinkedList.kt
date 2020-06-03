@@ -74,6 +74,8 @@ fun <A> List<A>.init(): List<A> {
 
 fun <A> List<A>.length(): Int = List.foldRight(this, 0) { _, acc -> acc + 1 }
 
+fun <A> List<A>.reverse(): List<A> = List.foldLeft(this, List.empty<A>()) { acc, a -> Cons(a, acc)}
+
 fun main() {
     val a = List.of(1, 2, 3, 4)
     val b = List.of(4.0, 5.0, 6.0, 7.0, 8.0)
@@ -81,6 +83,6 @@ fun main() {
     println(List.sum(a))
     println(List.product(b))
 
-    println(a.length())
-    println(b.length())
+    println(a.reverse())
+    println(b.reverse())
 }
