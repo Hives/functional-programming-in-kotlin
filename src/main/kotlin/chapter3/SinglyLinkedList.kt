@@ -7,9 +7,11 @@ sealed class List<out A> {
             return if (aa.isEmpty()) Nil else Cons(aa[0], of(*tail))
         }
 
-        fun sum(ints: List<Int>): Int = foldRight(ints, 0, { a, b -> a + b })
+        fun <A> empty(): List<A> = Nil
 
-        fun product(dbs: List<Double>): Double = foldRight(dbs, 1.0, { a, b -> a * b })
+        fun sum(ints: List<Int>): Int = foldRight(ints, 0) { a, b -> a + b }
+
+        fun product(dbs: List<Double>): Double = foldRight(dbs, 1.0) { a, b -> a * b }
 
         fun <A, B> foldRight(xs: List<A>, acc: B, f: (A, B) -> B): B =
             when (xs) {
@@ -64,10 +66,19 @@ fun <A> List<A>.init(): List<A> {
     }
 }
 
+fun <A> List<A>.length(): Int = List.foldRight(this, 0) { _, acc -> acc + 1 }
+
 fun main() {
-    val a = Cons(1, Cons(2, Cons(3, Cons(4, Nil))))
-    val b = Cons(1.0, Cons(2.0, Cons(3.0, Cons(4.0, Nil))))
+    val a = List.of(1, 2, 3, 4)
+    val b = List.of(4.0, 5.0, 6.0, 7.0, 8.0)
 
     println(List.sum(a))
     println(List.product(b))
+
+    println(
+        List.foldRight(List.of(1, 2, 3), List.empty<Int>(), { x, y -> Cons(x, y) })
+    )
+
+    println(a.length())
+    println(b.length())
 }
