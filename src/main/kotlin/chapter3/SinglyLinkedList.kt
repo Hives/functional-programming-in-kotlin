@@ -9,14 +9,20 @@ sealed class List<out A> {
 
         fun <A> empty(): List<A> = Nil
 
-        fun sum(ints: List<Int>): Int = foldRight(ints, 0) { a, b -> a + b }
+        fun sum(ints: List<Int>): Int = foldLeft(ints, 0) { a, b -> a + b }
 
-        fun product(dbs: List<Double>): Double = foldRight(dbs, 1.0) { a, b -> a * b }
+        fun product(dbs: List<Double>): Double = foldLeft(dbs, 1.0) { a, b -> a * b }
 
         fun <A, B> foldRight(xs: List<A>, acc: B, f: (A, B) -> B): B =
             when (xs) {
                 is Nil -> acc
                 is Cons -> f(xs.head, foldRight(xs.tail, acc, f))
+            }
+
+        tailrec fun <A, B> foldLeft(xs: List<A>, acc: B, f: (B, A) -> B): B =
+            when (xs) {
+                is Nil -> acc
+                is Cons -> foldLeft(xs.tail, f(acc, xs.head), f)
             }
     }
 }
@@ -74,10 +80,6 @@ fun main() {
 
     println(List.sum(a))
     println(List.product(b))
-
-    println(
-        List.foldRight(List.of(1, 2, 3), List.empty<Int>(), { x, y -> Cons(x, y) })
-    )
 
     println(a.length())
     println(b.length())
