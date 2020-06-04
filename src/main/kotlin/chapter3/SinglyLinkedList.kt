@@ -24,22 +24,6 @@ sealed class List<out A> {
                 is Nil -> acc
                 is Cons -> foldLeft(xs.tail, f(acc, xs.head), f)
             }
-
-        fun <A, B> foldRightL(xs: List<A>, acc: B, f: (A, B) -> B): B {
-            val reversedXs = foldLeft(xs, empty<A>()) { z, a -> Cons(a, z) }
-            return foldLeft(reversedXs, acc) { b, a -> f(a, b) }
-        }
-
-        fun <A, B> foldLeftR(xs: List<A>, acc: B, f: (B, A) -> B): B {
-            fun g(a: A, b: List<A>): List<A> =
-                when (b) {
-                    is Nil -> Cons(a, b)
-                    else -> Cons(b.head(), g(a, b.tail()))
-                }
-
-            val reversedXs = foldRight(xs, empty<A>()) { a, acc -> g(a, acc) }
-            return foldRight(reversedXs, acc) { a, b -> f(b, a) }
-        }
     }
 }
 
@@ -117,7 +101,5 @@ fun main() {
     println(a.reverseR())
 
     println(List.foldRight(a, List.empty<Int>()) { a, b -> Cons(a, b) })
-    println(List.foldRightL(a, List.empty<Int>()) { a, b -> Cons(a, b) })
     println(List.foldLeft(a, List.empty<Int>()) { a, b -> Cons(b, a) })
-    println(List.foldLeftR(a, List.empty<Int>()) { a, b -> Cons(b, a) })
 }
