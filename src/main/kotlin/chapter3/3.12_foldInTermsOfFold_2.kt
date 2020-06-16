@@ -13,6 +13,7 @@ fun <A, B> foldRightL2(xs: List<A>, z: B, f: (A, B) -> B): B =
 // foldLeft([3], f(f({it}, 1), 2), f)(z)
 // foldLeft([], f(f(f({it}, 1), 2), 3), f)(z)
 // f(f(f({it}, 1), 2), 3)(z)
+// f(f(f(z, 1), 2), 3)
 //
 // f = { g, a -> { b -> g(h(a, b)) } }
 // f(f({ b -> h(1, b)}, 2), 3)(z)
