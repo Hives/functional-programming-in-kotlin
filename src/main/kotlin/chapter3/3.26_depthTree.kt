@@ -1,7 +1,7 @@
 package chapter3
 
 fun <A> depth(tree: Tree<A>): Int =
-    when(tree) {
+    when (tree) {
         is Leaf -> 0
         is Branch -> 1 + maxOf(depth(tree.left), depth(tree.right))
     }
