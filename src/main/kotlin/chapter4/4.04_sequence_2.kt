@@ -6,7 +6,7 @@ import chapter3.Nil
 import chapter3.foldRightL2
 import chapter3.map
 
-fun <A> sequence(
+fun <A> sequence2(
     xs: List<Option<A>>
 ): Option<List<A>> =
     foldRightL2(xs, Some(Nil)) { oa1: Option<A>, oa2: Option<List<A>> ->
@@ -15,6 +15,6 @@ fun <A> sequence(
 
 fun main() {
     val options = List.of(1, 2, 3).map { Some(it) }
-    println(sequence(options))
-    println(sequence(Cons(None, options)))
+    println(sequence2(options))
+    println(sequence2(Cons(None, options)))
 }
