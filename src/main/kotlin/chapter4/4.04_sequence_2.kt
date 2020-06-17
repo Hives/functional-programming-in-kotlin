@@ -1,18 +1,20 @@
 package chapter4
 
-// this is more like how they did it in the book. except they used a foldRight,
-// and they used the linked list class created in chapter 3
+import chapter3.Cons
+import chapter3.List
+import chapter3.Nil
+import chapter3.foldRightL2
+import chapter3.map
 
 fun <A> sequence(
     xs: List<Option<A>>
 ): Option<List<A>> =
-    xs.fold(Some(emptyList<A>()) as Option<List<A>>) { acc, x ->
-        map2(acc, x) { acc, x -> acc + x }
+    foldRightL2(xs, Some(Nil)) { oa1: Option<A>, oa2: Option<List<A>> ->
+        map2(oa1, oa2) { a1: A, a2: List<A> -> Cons(a1, a2) }
     }
 
 fun main() {
-    val options1 = listOf(1, 2, 3).map { Some(it) }
-    val options2 = listOf(4, 5, 6).map { Some(it) }
-    val options3 = options1 + None + options2
-    println(sequence(options3))
+    val options = List.of(1, 2, 3).map { Some(it) }
+    println(sequence(options))
+    println(sequence(Cons(None, options)))
 }
