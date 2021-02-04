@@ -2,7 +2,7 @@ package chapter3_functionalDataStructures
 
 fun <A> List<A>.filter(f: (A) -> Boolean) =
     List.foldRight(this, List.empty<A>()) { x, xa ->
-        if (f(x)) Cons(x, xa)
+        if (f(x)) ConsL(x, xa)
         else xa
     }
 

@@ -1,7 +1,7 @@
 package chapter3_functionalDataStructures
 
 fun <A> append(a1: List<A>, a2: List<A>): List<A> =
-    List.foldRight(a1, a2) { x, xs -> Cons(x, xs) }
+    List.foldRight(a1, a2) { x, xs -> ConsL(x, xs) }
 
 fun main() {
     val xs = List.of(1, 2, 3, 4, 5)

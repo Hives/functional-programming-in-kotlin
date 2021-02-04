@@ -2,10 +2,10 @@ package chapter3_functionalDataStructures
 
 tailrec fun <A> List<A>.startsWith(xs: List<A>): Boolean =
     when (xs) {
-        is Nil -> true
-        is Cons -> when (this) {
-            is Nil -> false
-            is Cons ->
+        is NilL -> true
+        is ConsL -> when (this) {
+            is NilL -> false
+            is ConsL ->
                 if (this.head() == xs.head()) this.tail().startsWith(xs.tail())
                 else false
         }
@@ -13,8 +13,8 @@ tailrec fun <A> List<A>.startsWith(xs: List<A>): Boolean =
 
 tailrec fun <A> List<A>.hasSubsequence(xs: List<A>): Boolean =
     when (this) {
-        is Nil -> false
-        is Cons ->
+        is NilL -> false
+        is ConsL ->
             if (this.startsWith(xs)) true
             else this.tail().hasSubsequence(xs)
     }

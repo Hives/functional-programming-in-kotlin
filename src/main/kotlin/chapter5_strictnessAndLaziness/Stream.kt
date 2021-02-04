@@ -3,8 +3,8 @@ package chapter5_strictnessAndLaziness
 sealed class Stream<out A> {
     companion object {
         fun <A> cons(hd: () -> A, tl: () -> Stream<A>): Stream<A> {
-            val head: A by lazy { hd() }
-            val tail: Stream<A> by lazy { tl() }
+            val head: A by lazy(hd)
+            val tail: Stream<A> by lazy(tl)
             return Cons({ head }, { tail })
         }
 
@@ -17,8 +17,8 @@ sealed class Stream<out A> {
 }
 
 data class Cons<out A>(
-    val h: () -> A,
-    val t: () -> Stream<A>
+    val head: () -> A,
+    val tail: () -> Stream<A>
 ) : Stream<A>()
 
 object Empty : Stream<Nothing>()
