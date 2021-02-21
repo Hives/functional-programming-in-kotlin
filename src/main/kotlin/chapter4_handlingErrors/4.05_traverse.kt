@@ -1,16 +1,16 @@
 package chapter4_handlingErrors
 
-import chapter3_functionalDataStructures.ConsL
+import chapter3_functionalDataStructures.Cons
 import chapter3_functionalDataStructures.List
-import chapter3_functionalDataStructures.NilL
+import chapter3_functionalDataStructures.Nil
 import chapter3_functionalDataStructures.foldRightL2
 
 fun <A, B> traverse(
     xa: List<A>,
     f: (A) -> Option<B>
 ): Option<List<B>> =
-    foldRightL2(xa, Some(NilL)) { a: A, acc: Option<List<B>> ->
-        map2(f(a), acc) { ob, obs -> ConsL(ob, obs) }
+    foldRightL2(xa, Some(Nil)) { a: A, acc: Option<List<B>> ->
+        map2(f(a), acc) { ob, obs -> Cons(ob, obs) }
     }
 
 fun <A> sequence3(

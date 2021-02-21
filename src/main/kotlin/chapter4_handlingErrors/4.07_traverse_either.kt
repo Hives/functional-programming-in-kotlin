@@ -1,15 +1,15 @@
 package chapter4_handlingErrors
 
-import chapter3_functionalDataStructures.ConsL
+import chapter3_functionalDataStructures.Cons
 import chapter3_functionalDataStructures.List
-import chapter3_functionalDataStructures.NilL
+import chapter3_functionalDataStructures.Nil
 import chapter3_functionalDataStructures.foldRightL2
 
 fun <A, B, E> List<A>.traverse(
     f: (A) -> Either<E, B>
 ): Either<E, List<B>> =
-    foldRightL2(this, Right(NilL)) { a: A, acc: Either<E, List<B>> ->
-        map2(f(a), acc) { ob, obs -> ConsL(ob, obs) }
+    foldRightL2(this, Right(Nil)) { a: A, acc: Either<E, List<B>> ->
+        map2(f(a), acc) { ob, obs -> Cons(ob, obs) }
     }
 
 fun <A, E> List<Either<E, A>>.sequence(): Either<E, List<A>> =

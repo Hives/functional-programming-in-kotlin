@@ -1,7 +1,7 @@
 package chapter3_functionalDataStructures
 
 fun <A> concat(xxs: List<List<A>>): List<A> =
-    foldRightL2(xxs, NilL, ::append)
+    foldRightL2(xxs, Nil, ::append)
 
 fun main() {
     println(

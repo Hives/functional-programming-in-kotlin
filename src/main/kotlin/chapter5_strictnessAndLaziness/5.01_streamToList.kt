@@ -1,8 +1,8 @@
 package chapter5_strictnessAndLaziness
 
-import chapter3_functionalDataStructures.ConsL
+import chapter3_functionalDataStructures.Cons as ConsL
 import chapter3_functionalDataStructures.List
-import chapter3_functionalDataStructures.NilL
+import chapter3_functionalDataStructures.Nil as NilL
 import chapter3_functionalDataStructures.reverseL
 
 fun <A> Stream<A>.toList(): List<A> {
