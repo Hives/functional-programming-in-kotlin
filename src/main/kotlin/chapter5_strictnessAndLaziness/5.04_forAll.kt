@@ -9,7 +9,7 @@ package chapter5_strictnessAndLaziness
 //    }
 
 fun <A> Stream<A>.forAll(p: (A) -> Boolean): Boolean =
-    foldRight({true}, {a, b -> p(a) && b() })
+    foldRight({ true }, { h, t -> p(h) && t() })
 
 fun main() {
     val a = Stream.of(2, 4, 3, 4, 5, 6, 7)
